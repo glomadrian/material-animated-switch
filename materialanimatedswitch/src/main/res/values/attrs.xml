@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="materialAnimatedSwitch">
+    <attr name="icon_release"
+        format="reference"/>
+    <attr name="icon_press"
+        format="reference"/>
+    <attr name="base_release_color"
+        format="color"/>
+    <attr name="base_press_color"
+        format="color"/>
+    <attr name="ball_release_color"
+        format="color"/>
+    <attr name="ball_press_color"
+        format="color"/>
+  </declare-styleable>
+</resources>

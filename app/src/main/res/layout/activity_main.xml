@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -10,21 +11,37 @@
     android:background="#4285F4"
     >
 
-  <com.github.glomadrian.switchinboxpinned.SwitchPinned
+  <com.github.glomadrian.materialanimatedswitch.SwitchPinned
       android:id="@+id/pin"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerInParent="true"
       >
+  </com.github.glomadrian.materialanimatedswitch.SwitchPinned>
 
-  </com.github.glomadrian.switchinboxpinned.SwitchPinned>
-
-  <android.support.v7.widget.SwitchCompat
+  <com.github.glomadrian.materialanimatedswitch.SwitchPinned
+      android:layout_below="@+id/pin"
+      android:layout_marginTop="20dp"
+      android:id="@+id/pin2"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@+id/pin"
       android:layout_centerInParent="true"
-      android:layout_marginTop="50dp"
+      app:base_release_color="@color/md_green_900"
+      app:base_press_color="@color/md_green_50"
+      app:ball_release_color="@color/md_green_500"
+      app:ball_press_color="@color/md_white_1000"
+      app:icon_release="@drawable/shield_with_sword_64"
+      app:icon_press="@drawable/sword_in_vertical_position_64"
+
       />
+
+     <android.support.v7.widget.SwitchCompat
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/pin2"
+      android:layout_centerInParent="true"
+      android:layout_marginTop="20dp"
+      />
+
 
 </RelativeLayout>
