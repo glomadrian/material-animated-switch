@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import com.github.glomadrian.materialanimatedswitch.Utils;
+import com.github.glomadrian.materialanimatedswitch.R;
 
 /**
  * @author Adrián García Lomas
@@ -19,7 +19,6 @@ public abstract class IconPainter implements SwitchInboxPinnedPainter {
   protected int imageHeight;
   protected int imageWidth;
   protected boolean isVisible = false;
-  protected int lastBallPosition;
   protected int iconXPosition;
   protected int iconYPosition;
   protected int margin;
@@ -34,12 +33,11 @@ public abstract class IconPainter implements SwitchInboxPinnedPainter {
   private void init() {
     paint = new Paint();
     paint.setAntiAlias(true);
-    paint.setStrokeWidth(5);
     initBitmap();
   }
 
   protected void initBitmap() {
-    int iconSize = Utils.dpToPx(11, context.getResources());
+    int iconSize = (int) context.getResources().getDimension(R.dimen.icon_size);
     iconBitmap = Bitmap.createScaledBitmap(iconBitmap, iconSize, iconSize, false);
     imageHeight = iconBitmap.getHeight();
     imageWidth = iconBitmap.getWidth();

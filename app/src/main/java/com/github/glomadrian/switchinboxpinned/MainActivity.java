@@ -1,15 +1,25 @@
 package com.github.glomadrian.switchinboxpinned;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+import com.github.glomadrian.materialanimatedswitch.SwitchPinned;
 
 public class MainActivity extends ActionBarActivity {
+
+  private SwitchPinned switchPinned;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    switchPinned = (SwitchPinned) findViewById(R.id.pin);
+    switchPinned.setOnCheckedChangeListener(new SwitchPinned.OnCheckedChangeListener() {
+      @Override public void onCheckedChanged(boolean isChecked) {
+        Toast.makeText(MainActivity.this, isChecked + "", Toast.LENGTH_SHORT).show();
+      }
+    });
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {

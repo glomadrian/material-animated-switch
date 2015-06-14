@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="exitXAnimationStart">-15dp</dimen>
+  <dimen name="exitYAnimatorFinish">34dp</dimen>
+  <dimen name="enterYAnimationStart">-30dp</dimen>
+  <dimen name="enterAnimationStartValue">-25dp</dimen>
+  <dimen name="exitAnimationExitValue">25dp</dimen>
+  <dimen name="icon_size">11dp</dimen>
+  <dimen name="margin">11dp</dimen>
+  <dimen name="ball_radius">11dp</dimen>
+</resources>

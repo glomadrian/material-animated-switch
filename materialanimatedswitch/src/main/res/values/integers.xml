@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <integer name="animation_duration">400</integer>
+  <integer name="alpha_animation_duration">200</integer>
+  <integer name="animation_curvature_compensation">14</integer>
+  <integer name="exitAnimator">200</integer>
+</resources>

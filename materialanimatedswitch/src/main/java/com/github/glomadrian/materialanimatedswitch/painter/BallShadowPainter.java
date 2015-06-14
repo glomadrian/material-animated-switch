@@ -1,5 +1,7 @@
 package com.github.glomadrian.materialanimatedswitch.painter;
 
+import android.content.Context;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.view.View;
 import com.github.glomadrian.materialanimatedswitch.Utils;
@@ -11,16 +13,15 @@ import com.github.glomadrian.materialanimatedswitch.observer.BallMoveObservable;
  */
 public class BallShadowPainter extends BallPainter {
 
-  int shadowMovement;
-
-  public BallShadowPainter(int bgColor, int toBgColor, View view, int pading, int shadowColor,
-      BallFinishObservable ballFinishObservable, BallMoveObservable ballMoveObservable) {
-    super(bgColor, toBgColor, view, pading, ballFinishObservable, ballMoveObservable);
-    shadowMovement = Utils.dpToPx(2, view.getResources());
+  public BallShadowPainter(int bgColor, int toBgColor, View view, int padding, int shadowColor,
+      BallFinishObservable ballFinishObservable, BallMoveObservable ballMoveObservable,
+      Context context) {
+    super(bgColor, toBgColor, view, padding, ballFinishObservable, ballMoveObservable, context);
     paint.setColor(shadowColor);
+    paint.setMaskFilter(new BlurMaskFilter(3, BlurMaskFilter.Blur.NORMAL));
   }
 
   @Override public void draw(Canvas canvas) {
-    canvas.drawCircle(ballPositionX + 2, (height / 2) + 2, radius, paint);
+    canvas.drawCircle(ballPositionX, (height / 2) + 2, radius , paint);
   }
 }

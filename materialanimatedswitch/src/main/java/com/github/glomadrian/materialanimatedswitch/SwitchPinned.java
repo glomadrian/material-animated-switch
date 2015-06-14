@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import com.github.glomadrian.materialanimatedswitch.observer.BallFinishObservable;
 import com.github.glomadrian.materialanimatedswitch.observer.BallMoveObservable;
@@ -16,6 +17,8 @@ import com.github.glomadrian.materialanimatedswitch.painter.BallShadowPainter;
 import com.github.glomadrian.materialanimatedswitch.painter.BasePainter;
 import com.github.glomadrian.materialanimatedswitch.painter.IconPressPainter;
 import com.github.glomadrian.materialanimatedswitch.painter.IconReleasePainter;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * @author Adrián García Lomas
@@ -38,6 +41,8 @@ public class SwitchPinned extends View {
   private Bitmap pressIcon;
   private BallFinishObservable ballFinishObservable;
   private BallMoveObservable ballMoveObservable;
+  private boolean isClickable = true;
+  private OnCheckedChangeListener onCheckedChangeListener;
 
   public SwitchPinned(Context context) {
     super(context);
@@ -55,7 +60,7 @@ public class SwitchPinned extends View {
   }
 
   private void init() {
-    margin = Utils.dpToPx(11, getResources());
+    margin = (int) getContext().getResources().getDimension(R.dimen.margin);
     initObservables();
     initPainters();
     actualState = SwitchInboxPinedState.INIT;
@@ -67,11 +72,13 @@ public class SwitchPinned extends View {
     basePainter = new BasePainter(baseColorRelease, baseColorPress, margin, ballMoveObservable);
     ballPainter =
         new BallPainter(ballColorRelease, ballColorPress, this, margin, ballFinishObservable,
-            ballMoveObservable);
+            ballMoveObservable, getContext());
     ballShadowPainter =
         new BallShadowPainter(ballShadowColor, ballShadowColor, this, margin, ballShadowColor,
-            ballFinishObservable, ballMoveObservable);
-    iconPressPainter = new IconPressPainter(getContext(), pressIcon, ballFinishObservable, margin);
+            ballFinishObservable, ballMoveObservable, getContext());
+    iconPressPainter =
+        new IconPressPainter(getContext(), pressIcon, ballFinishObservable, ballMoveObservable,
+            margin);
     iconReleasePainter =
         new IconReleasePainter(getContext(), releaseIcon, ballFinishObservable, margin);
   }
@@ -103,6 +110,7 @@ public class SwitchPinned extends View {
   private void initObservables() {
     ballFinishObservable = new BallFinishObservable();
     ballMoveObservable = new BallMoveObservable();
+    ballFinishObservable.addObserver(new BallStateObserver());
   }
 
   @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -138,8 +146,11 @@ public class SwitchPinned extends View {
     super.onTouchEvent(event);
 
     switch (event.getAction()) {
+
       case MotionEvent.ACTION_DOWN:
-        doActionDown();
+        if (isClickable) {
+          doActionDown();
+        }
         return true;
       default:
         return false;
@@ -155,5 +166,47 @@ public class SwitchPinned extends View {
       actualState = SwitchInboxPinedState.RELEASE;
       setState(actualState);
     }
+    playSoundEffect(SoundEffectConstants.CLICK);
+  }
+
+  public void check() {
+    actualState = SwitchInboxPinedState.PRESS;
+    setState(actualState);
+  }
+
+  public void unCheck() {
+    actualState = SwitchInboxPinedState.RELEASE;
+    setState(actualState);
+  }
+
+  /**
+   * Avoid click when ball is still in movement
+   * Call listener when state is updated
+   */
+  private class BallStateObserver implements Observer {
+
+    @Override public void update(Observable observable, Object data) {
+      BallFinishObservable ballFinishObservable = (BallFinishObservable) observable;
+      isClickable = !ballFinishObservable.getState().equals(BallFinishObservable.BallState.MOVE);
+
+      if (ballFinishObservable.getState().equals(BallFinishObservable.BallState.PRESS)) {
+        if (onCheckedChangeListener != null) {
+          onCheckedChangeListener.onCheckedChanged(true);
+        }
+      } else if (ballFinishObservable.getState().equals(BallFinishObservable.BallState.RELEASE)) {
+        if (onCheckedChangeListener != null) {
+          onCheckedChangeListener.onCheckedChanged(false);
+        }
+      }
+    }
+  }
+
+  public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
+    this.onCheckedChangeListener = onCheckedChangeListener;
+  }
+
+  public interface OnCheckedChangeListener {
+
+    void onCheckedChanged(boolean isChecked);
   }
 }

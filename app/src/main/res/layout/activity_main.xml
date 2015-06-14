@@ -35,13 +35,16 @@
 
       />
 
-     <android.support.v7.widget.SwitchCompat
+  <com.github.glomadrian.materialanimatedswitch.SwitchPinned
+      android:id="@+id/pin3"
+      android:layout_below="@+id/pin2"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@+id/pin2"
       android:layout_centerInParent="true"
       android:layout_marginTop="20dp"
-      />
-
+      app:icon_release="@drawable/ic_create_white_36dp"
+      app:icon_press="@drawable/ic_delete_blue_500_36dp"
+      >
+  </com.github.glomadrian.materialanimatedswitch.SwitchPinned>
 
 </RelativeLayout>

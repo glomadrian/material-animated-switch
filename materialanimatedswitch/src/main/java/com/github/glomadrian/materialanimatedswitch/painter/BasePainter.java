@@ -83,7 +83,7 @@ public class BasePainter implements SwitchInboxPinnedPainter, Observer {
   }
 
   @Override public void update(Observable observable, Object data) {
-    int value = ((BallMoveObservable) observable).getBallPosition();
+    int value = ((BallMoveObservable) observable).getBallAnimationValue();
     colorAnimator.setCurrentPlayTime(value);
   }
 }

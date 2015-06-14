@@ -1,9 +1,10 @@
 package com.github.glomadrian.materialanimatedswitch.painter;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.view.animation.AccelerateDecelerateInterpolator;
+import com.github.glomadrian.materialanimatedswitch.R;
 import com.github.glomadrian.materialanimatedswitch.SwitchInboxPinedState;
 import com.github.glomadrian.materialanimatedswitch.observer.BallFinishObservable;
 import java.util.Observable;
@@ -14,14 +15,19 @@ import java.util.Observer;
  */
 public class IconReleasePainter extends IconPainter {
 
-  private ValueAnimator enterXAnimatior;
-  private ValueAnimator enterYAnimatior;
-  private ValueAnimator exitXAnimatior;
-  private ValueAnimator exitYAnimatior;
-  private ValueAnimator alphaAnimator;
-  private int initY = -100;
-  private int initX;
+  private ValueAnimator enterXAnimator;
+  private ValueAnimator enterYAnimator;
+  private ValueAnimator exitXAnimator;
+  private ValueAnimator exitYAnimator;
+  private ValueAnimator exitAlphaAnimator;
+  private int enterYAnimationStart;
+  private int exitYAnimatorFinish;
+  private int exitXAnimationStart;
   private BallFinishObservable ballFinishObservable;
+  private SwitchInboxPinedState actualState;
+  private int iconMargin;
+  private int middle;
+  private boolean alphaEnterTrigger = false;
 
   public IconReleasePainter(Context context, Bitmap bitmap,
       BallFinishObservable ballFinishObservable, int margin) {
@@ -31,34 +37,41 @@ public class IconReleasePainter extends IconPainter {
     initObserver();
   }
 
+  @Override protected void initBitmap() {
+    super.initBitmap();
+  }
+
   private void initValueAnimator() {
-    enterXAnimatior = ValueAnimator.ofInt(0, initX);
-    enterXAnimatior.setDuration(400);
-    enterXAnimatior.setInterpolator(new AccelerateDecelerateInterpolator());
-    enterXAnimatior.addUpdateListener(new EnterXAnimationListener());
+    int movementAnimationDuration = context.getResources().getInteger(R.integer.animation_duration);
+    int alphaAnimationDuration =
+        context.getResources().getInteger(R.integer.alpha_animation_duration);
+    int curveCompensation =
+        context.getResources().getInteger(R.integer.animation_curvature_compensation);
 
-    exitXAnimatior = ValueAnimator.ofInt(-50, initX);
-    exitXAnimatior.setDuration(400);
-    exitXAnimatior.setInterpolator(new AccelerateDecelerateInterpolator());
-    exitXAnimatior.addUpdateListener(new EnterXAnimationListener());
+    enterXAnimator = ValueAnimator.ofInt(0, width);
+    enterXAnimator.setDuration(movementAnimationDuration);
+    enterXAnimator.addUpdateListener(new EnterXAnimationListener());
 
-    enterYAnimatior = ValueAnimator.ofInt(initX, 0);
-    enterYAnimatior.setDuration(400);
-    enterYAnimatior.setInterpolator(new AccelerateDecelerateInterpolator());
-    enterYAnimatior.addUpdateListener(new EnterYAnimationListener());
+    exitXAnimator = ValueAnimator.ofInt();
+    exitXAnimator.setDuration(movementAnimationDuration);
+    exitXAnimator.addUpdateListener(new EnterXAnimationListener());
 
-    exitYAnimatior = ValueAnimator.ofInt(0, 100);
-    exitYAnimatior.setDuration(400);
-    exitYAnimatior.setInterpolator(new AccelerateDecelerateInterpolator());
-    exitYAnimatior.addUpdateListener(new EnterYAnimationListener());
+    enterYAnimator = ValueAnimator.ofInt(width, 0);
+    enterYAnimator.setDuration(movementAnimationDuration - curveCompensation);
+    enterYAnimator.addUpdateListener(new EnterYAnimationListener());
 
-    alphaAnimator = ValueAnimator.ofInt(0, 255);
-    alphaAnimator.setDuration(200);
-    alphaAnimator.addUpdateListener(new AlphaAnimatorListener());
+    exitYAnimator = ValueAnimator.ofInt();
+    exitYAnimator.setDuration(movementAnimationDuration);
+    exitYAnimator.addUpdateListener(new EnterYAnimationListener());
+
+    exitAlphaAnimator = ValueAnimator.ofInt(0, 255);
+    exitAlphaAnimator.setDuration(alphaAnimationDuration);
+    exitAlphaAnimator.addUpdateListener(new AlphaAnimatorUpdateListener());
+    exitAlphaAnimator.addListener(new AlphaAnimatorStateListener());
   }
 
   @Override public void setColor(int color) {
-
+    //Empty
   }
 
   @Override public int getColor() {
@@ -66,21 +79,20 @@ public class IconReleasePainter extends IconPainter {
   }
 
   @Override public void setState(SwitchInboxPinedState state) {
+    this.actualState = state;
     switch (state) {
       case INIT:
         isVisible = true;
         break;
       case PRESS:
-        exitYAnimatior.start();
-        exitXAnimatior.reverse();
-        alphaAnimator.reverse();
-
+        exitYAnimator.start();
+        exitXAnimator.reverse();
+        exitAlphaAnimator.reverse();
         break;
       case RELEASE:
         isVisible = true;
-        alphaAnimator.start();
-        enterXAnimatior.reverse();
-        enterYAnimatior.start();
+        enterXAnimator.reverse();
+        enterYAnimator.start();
         break;
     }
   }
@@ -103,32 +115,83 @@ public class IconReleasePainter extends IconPainter {
 
   @Override public void onSizeChanged(int height, int width) {
     super.onSizeChanged(height, width);
-    initX = width;
-    iconYPosition = height / 2 - (imageHeight / 2);
-    iconXPosition = margin - imageWidth / 2;
-    enterXAnimatior.setIntValues(0, initX);
-    enterYAnimatior.setIntValues(initY, height / 2);
-    exitYAnimatior.setIntValues(height / 2, 100);
+    initValues();
+    initAnimationsValues();
+    iconYPosition = middle - (iconMargin);
+    iconXPosition = margin - iconMargin;
+    enterXAnimator.setIntValues(0, width);
+    enterYAnimator.setIntValues(enterYAnimationStart, middle);
+    exitYAnimator.setIntValues(middle, exitYAnimatorFinish);
+    exitXAnimator.setIntValues(exitXAnimationStart, margin - imageWidth);
   }
 
+  private void initValues() {
+    iconMargin = imageWidth / 2;
+    middle = height / 2;
+  }
+
+  private void initAnimationsValues() {
+    exitXAnimationStart = (int) context.getResources().getDimension(R.dimen.exitXAnimationStart);
+    exitYAnimatorFinish = (int) context.getResources().getDimension(R.dimen.exitYAnimatorFinish);
+    enterYAnimationStart = (int) context.getResources().getDimension(R.dimen.enterYAnimationStart);
+  }
+
+  /**
+   * Update the icon position in the x axis
+   */
   private class EnterXAnimationListener implements ValueAnimator.AnimatorUpdateListener {
 
     @Override public void onAnimationUpdate(ValueAnimator animation) {
-      iconXPosition = ((int) animation.getAnimatedValue()) - imageWidth / 2 + margin;
+      iconXPosition = ((int) animation.getAnimatedValue()) - iconMargin + margin;
     }
   }
 
+  /**
+   * Move the icon in the y axis and perform a trigger
+   */
   private class EnterYAnimationListener implements ValueAnimator.AnimatorUpdateListener {
 
     @Override public void onAnimationUpdate(ValueAnimator animation) {
-      iconYPosition = ((int) animation.getAnimatedValue() - imageWidth / 2);
+      iconYPosition = ((int) animation.getAnimatedValue() - iconMargin);
+
+      if (animation.getCurrentPlayTime() > animation.getDuration() / 2
+          && !alphaEnterTrigger
+          && actualState.equals(SwitchInboxPinedState.RELEASE)) {
+        exitAlphaAnimator.start();
+        alphaEnterTrigger = true;
+      }
     }
   }
 
-  private class AlphaAnimatorListener implements ValueAnimator.AnimatorUpdateListener {
+  /**
+   * Update the alpha
+   */
+  private class AlphaAnimatorUpdateListener implements ValueAnimator.AnimatorUpdateListener {
 
     @Override public void onAnimationUpdate(ValueAnimator animation) {
       paint.setAlpha((Integer) animation.getAnimatedValue());
+    }
+  }
+
+  /**
+   * Set alpha trigger to false on animation end
+   */
+  private class AlphaAnimatorStateListener implements ValueAnimator.AnimatorListener {
+
+    @Override public void onAnimationStart(Animator animation) {
+      //Empty
+    }
+
+    @Override public void onAnimationEnd(Animator animation) {
+      alphaEnterTrigger = false;
+    }
+
+    @Override public void onAnimationCancel(Animator animation) {
+      //Empty
+    }
+
+    @Override public void onAnimationRepeat(Animator animation) {
+      //Empty
     }
   }
 }
