@@ -24,8 +24,8 @@ public class IconReleasePainter extends IconPainter {
   private BallFinishObservable ballFinishObservable;
 
   public IconReleasePainter(Context context, Bitmap bitmap,
-      BallFinishObservable ballFinishObservable) {
-    super(context, bitmap);
+      BallFinishObservable ballFinishObservable, int margin) {
+    super(context, bitmap, margin);
     initValueAnimator();
     this.ballFinishObservable = ballFinishObservable;
     initObserver();
@@ -94,7 +94,6 @@ public class IconReleasePainter extends IconPainter {
     @Override public void update(Observable observable, Object data) {
       BallFinishObservable.BallState ballState = ((BallFinishObservable) observable).getState();
       switch (ballState) {
-
         case PRESS:
           isVisible = false;
           break;
@@ -106,7 +105,7 @@ public class IconReleasePainter extends IconPainter {
     super.onSizeChanged(height, width);
     initX = width;
     iconYPosition = height / 2 - (imageHeight / 2);
-    iconXPosition = 35 - imageWidth / 2;
+    iconXPosition = margin - imageWidth / 2;
     enterXAnimatior.setIntValues(0, initX);
     enterYAnimatior.setIntValues(initY, height / 2);
     exitYAnimatior.setIntValues(height / 2, 100);
@@ -115,7 +114,7 @@ public class IconReleasePainter extends IconPainter {
   private class EnterXAnimationListener implements ValueAnimator.AnimatorUpdateListener {
 
     @Override public void onAnimationUpdate(ValueAnimator animation) {
-      iconXPosition = ((int) animation.getAnimatedValue()) - imageWidth / 2 + 35;
+      iconXPosition = ((int) animation.getAnimatedValue()) - imageWidth / 2 + margin;
     }
   }
 

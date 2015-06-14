@@ -22,10 +22,12 @@ public abstract class IconPainter implements SwitchInboxPinnedPainter {
   protected int lastBallPosition;
   protected int iconXPosition;
   protected int iconYPosition;
+  protected int margin;
 
-  public IconPainter(Context context, Bitmap bitmap) {
+  public IconPainter(Context context, Bitmap bitmap, int margin) {
     this.context = context;
     this.iconBitmap = bitmap;
+    this.margin = margin;
     init();
   }
 

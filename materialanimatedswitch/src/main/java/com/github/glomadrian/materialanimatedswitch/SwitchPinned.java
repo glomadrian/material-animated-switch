@@ -22,7 +22,7 @@ import com.github.glomadrian.materialanimatedswitch.painter.IconReleasePainter;
  */
 public class SwitchPinned extends View {
 
-  private int pading;
+  private int margin;
   private BasePainter basePainter;
   private BallPainter ballPainter;
   private BallShadowPainter ballShadowPainter;
@@ -55,25 +55,25 @@ public class SwitchPinned extends View {
   }
 
   private void init() {
-    pading = Utils.dpToPx(11, getResources());
+    margin = Utils.dpToPx(11, getResources());
     initObservables();
     initPainters();
     actualState = SwitchInboxPinedState.INIT;
     setState(actualState);
-    setLayerType(View.LAYER_TYPE_SOFTWARE, null); // cheese
+    setLayerType(View.LAYER_TYPE_SOFTWARE, null);
   }
 
   private void initPainters() {
-    basePainter = new BasePainter(baseColorRelease, baseColorPress, pading, ballMoveObservable);
+    basePainter = new BasePainter(baseColorRelease, baseColorPress, margin, ballMoveObservable);
     ballPainter =
-        new BallPainter(ballColorRelease, ballColorPress, this, pading, ballFinishObservable,
+        new BallPainter(ballColorRelease, ballColorPress, this, margin, ballFinishObservable,
             ballMoveObservable);
     ballShadowPainter =
-        new BallShadowPainter(ballShadowColor, ballShadowColor, this, pading, ballShadowColor,
+        new BallShadowPainter(ballShadowColor, ballShadowColor, this, margin, ballShadowColor,
             ballFinishObservable, ballMoveObservable);
-    iconPressPainter =
-        new IconPressPainter(getContext(), pressIcon, ballFinishObservable, ballMoveObservable);
-    iconReleasePainter = new IconReleasePainter(getContext(), releaseIcon, ballFinishObservable);
+    iconPressPainter = new IconPressPainter(getContext(), pressIcon, ballFinishObservable, margin);
+    iconReleasePainter =
+        new IconReleasePainter(getContext(), releaseIcon, ballFinishObservable, margin);
   }
 
   private void init(AttributeSet attrs) {
