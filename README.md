@@ -22,9 +22,8 @@ A material Switch with icon animations and color transitions
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
 
-Fully inspired in
+Based on
 ----------
-
 
 [Inbox Pinned](https://dribbble.com/shots/2098916-Inbox-Pinned) by [Derek Torsani](https://dribbble.com/dmtors)
 
