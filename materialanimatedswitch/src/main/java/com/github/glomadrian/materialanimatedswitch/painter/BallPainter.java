@@ -5,9 +5,8 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.view.View;
 import com.github.glomadrian.materialanimatedswitch.R;
-import com.github.glomadrian.materialanimatedswitch.SwitchInboxPinedState;
+import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitchState;
 import com.github.glomadrian.materialanimatedswitch.observer.BallFinishObservable;
 import com.github.glomadrian.materialanimatedswitch.observer.BallMoveObservable;
 
@@ -18,30 +17,28 @@ public class BallPainter implements SwitchInboxPinnedPainter {
 
   protected Paint paint;
   protected Paint toBgPainter;
-  private int bgColor;
-  private int toBgColor;
   protected int padding;
   protected int height;
   protected int width;
   protected int radius;
   protected int ballPositionX;
   protected int ballMovementRange;
-  private View view;
   private ValueAnimator moveAnimator;
   private ValueAnimator colorAnimator;
-  private SwitchInboxPinedState actualState;
+  private MaterialAnimatedSwitchState actualState;
   private BallFinishObservable ballFinishObservable;
   private BallMoveObservable ballMoveObservable;
   private Context context;
   private int middle;
+  private int bgColor;
+  private int toBgColor;
 
-  public BallPainter(int bgColor, int toBgColor, View view, int pading,
+  public BallPainter(int bgColor, int toBgColor, int padding,
       BallFinishObservable ballFinishObservable, BallMoveObservable ballMoveObservable,
       Context context) {
     this.bgColor = bgColor;
-    this.view = view;
     this.toBgColor = toBgColor;
-    this.padding = pading;
+    this.padding = padding;
     this.ballFinishObservable = ballFinishObservable;
     this.ballMoveObservable = ballMoveObservable;
     this.context = context;
@@ -103,14 +100,14 @@ public class BallPainter implements SwitchInboxPinnedPainter {
     initColorAnimator();
   }
 
-  @Override public void setState(SwitchInboxPinedState state) {
+  @Override public void setState(MaterialAnimatedSwitchState state) {
     switch (state) {
       case PRESS:
-        actualState = SwitchInboxPinedState.PRESS;
+        actualState = MaterialAnimatedSwitchState.PRESS;
         moveAnimator.start();
         break;
       case RELEASE:
-        actualState = SwitchInboxPinedState.RELEASE;
+        actualState = MaterialAnimatedSwitchState.RELEASE;
         moveAnimator.reverse();
     }
   }
@@ -122,7 +119,7 @@ public class BallPainter implements SwitchInboxPinnedPainter {
     }
 
     @Override public void onAnimationEnd(Animator animation) {
-      if (actualState.equals(SwitchInboxPinedState.PRESS)) {
+      if (actualState.equals(MaterialAnimatedSwitchState.PRESS)) {
         ballFinishObservable.setBallState(BallFinishObservable.BallState.PRESS);
       } else {
         ballFinishObservable.setBallState(BallFinishObservable.BallState.RELEASE);

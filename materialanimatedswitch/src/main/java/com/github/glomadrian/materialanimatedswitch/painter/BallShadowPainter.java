@@ -13,10 +13,10 @@ import com.github.glomadrian.materialanimatedswitch.observer.BallMoveObservable;
  */
 public class BallShadowPainter extends BallPainter {
 
-  public BallShadowPainter(int bgColor, int toBgColor, View view, int padding, int shadowColor,
+  public BallShadowPainter(int bgColor, int toBgColor, int padding, int shadowColor,
       BallFinishObservable ballFinishObservable, BallMoveObservable ballMoveObservable,
       Context context) {
-    super(bgColor, toBgColor, view, padding, ballFinishObservable, ballMoveObservable, context);
+    super(bgColor, toBgColor, padding, ballFinishObservable, ballMoveObservable, context);
     paint.setColor(shadowColor);
     paint.setMaskFilter(new BlurMaskFilter(3, BlurMaskFilter.Blur.NORMAL));
   }

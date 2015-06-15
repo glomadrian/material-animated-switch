@@ -5,7 +5,7 @@ android {
   buildToolsVersion "22.0.1"
 
   defaultConfig {
-    applicationId "com.github.glomadrian.switchinboxpinned"
+    applicationId "com.github.glomadrian.materialanimatedswitch.sample"
     minSdkVersion 16
     targetSdkVersion 22
     versionCode 1

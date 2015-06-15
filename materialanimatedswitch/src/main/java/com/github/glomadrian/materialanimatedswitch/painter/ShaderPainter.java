@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import com.github.glomadrian.materialanimatedswitch.SwitchInboxPinedState;
+import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitchState;
 
 /**
  * @author Adrián García Lomas
@@ -30,7 +30,7 @@ public class ShaderPainter implements SwitchInboxPinnedPainter {
   }
 
   @Override public void setColor(int color) {
-
+    //Empty
   }
 
   @Override public int getColor() {
@@ -43,8 +43,8 @@ public class ShaderPainter implements SwitchInboxPinnedPainter {
     createMask(height, width, 10);
   }
 
-  @Override public void setState(SwitchInboxPinedState state) {
-
+  @Override public void setState(MaterialAnimatedSwitchState state) {
+    //Empty
   }
 
   private void createMask(int w, int h, int radius) {

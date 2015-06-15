@@ -1,4 +1,4 @@
-package com.github.glomadrian.switchinboxpinned;
+package com.github.glomadrian.materialanimatedswitch.sample;
 
 import android.content.res.Resources;
 import android.util.TypedValue;

@@ -4,7 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import com.github.glomadrian.materialanimatedswitch.R;
-import com.github.glomadrian.materialanimatedswitch.SwitchInboxPinedState;
+import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitchState;
 import com.github.glomadrian.materialanimatedswitch.observer.BallFinishObservable;
 import com.github.glomadrian.materialanimatedswitch.observer.BallMoveObservable;
 import java.util.Observable;
@@ -83,7 +83,7 @@ public class IconPressPainter extends IconPainter {
     ballMoveObservable.addObserver(new BallMoveListener());
   }
 
-  @Override public void setState(SwitchInboxPinedState state) {
+  @Override public void setState(MaterialAnimatedSwitchState state) {
     switch (state) {
       case PRESS:
         isVisible = true;

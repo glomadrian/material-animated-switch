@@ -3,7 +3,7 @@ package com.github.glomadrian.materialanimatedswitch.painter;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import com.github.glomadrian.materialanimatedswitch.SwitchInboxPinedState;
+import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitchState;
 import com.github.glomadrian.materialanimatedswitch.observer.BallMoveObservable;
 import java.util.Observable;
 import java.util.Observer;
@@ -16,18 +16,18 @@ public class BasePainter implements SwitchInboxPinnedPainter, Observer {
   private Paint paint;
   private int bgColor;
   private int toBgColor;
-  private int pading;
+  private int padding;
   private int height;
   private int width;
   private Paint toBgPainter;
   private ValueAnimator colorAnimator;
   private BallMoveObservable ballMoveObservable;
 
-  public BasePainter(int bgColor, int toBgColor, int pading,
+  public BasePainter(int bgColor, int toBgColor, int padding,
       BallMoveObservable ballMoveObservable) {
     this.bgColor = bgColor;
     this.toBgColor = toBgColor;
-    this.pading = pading;
+    this.padding = padding;
     this.ballMoveObservable = ballMoveObservable;
     init();
   }
@@ -59,8 +59,8 @@ public class BasePainter implements SwitchInboxPinnedPainter, Observer {
   }
 
   @Override public void draw(Canvas canvas) {
-    canvas.drawLine(pading, height / 2, width - pading, height / 2, paint);
-    canvas.drawLine(pading, height / 2, width - pading, height / 2, toBgPainter);
+    canvas.drawLine(padding, height / 2, width - padding, height / 2, paint);
+    canvas.drawLine(padding, height / 2, width - padding, height / 2, toBgPainter);
   }
 
   @Override public int getColor() {
@@ -78,8 +78,8 @@ public class BasePainter implements SwitchInboxPinnedPainter, Observer {
     toBgPainter.setStrokeWidth(height / 2);
   }
 
-  @Override public void setState(SwitchInboxPinedState state) {
-
+  @Override public void setState(MaterialAnimatedSwitchState state) {
+    //Empty
   }
 
   @Override public void update(Observable observable, Object data) {

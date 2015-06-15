@@ -23,13 +23,13 @@ import java.util.Observer;
 /**
  * @author Adrián García Lomas
  */
-public class SwitchPinned extends View {
+public class MaterialAnimatedSwitch extends View {
 
   private int margin;
   private BasePainter basePainter;
   private BallPainter ballPainter;
   private BallShadowPainter ballShadowPainter;
-  private SwitchInboxPinedState actualState;
+  private MaterialAnimatedSwitchState actualState;
   private IconPressPainter iconPressPainter;
   private IconReleasePainter iconReleasePainter;
   private int baseColorRelease = Color.parseColor("#3061BE");
@@ -44,17 +44,17 @@ public class SwitchPinned extends View {
   private boolean isClickable = true;
   private OnCheckedChangeListener onCheckedChangeListener;
 
-  public SwitchPinned(Context context) {
+  public MaterialAnimatedSwitch(Context context) {
     super(context);
     init();
   }
 
-  public SwitchPinned(Context context, AttributeSet attrs) {
+  public MaterialAnimatedSwitch(Context context, AttributeSet attrs) {
     super(context, attrs);
     init(attrs);
   }
 
-  public SwitchPinned(Context context, AttributeSet attrs, int defStyleAttr) {
+  public MaterialAnimatedSwitch(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     init(attrs);
   }
@@ -63,18 +63,18 @@ public class SwitchPinned extends View {
     margin = (int) getContext().getResources().getDimension(R.dimen.margin);
     initObservables();
     initPainters();
-    actualState = SwitchInboxPinedState.INIT;
+    actualState = MaterialAnimatedSwitchState.INIT;
     setState(actualState);
     setLayerType(View.LAYER_TYPE_SOFTWARE, null);
   }
 
   private void initPainters() {
     basePainter = new BasePainter(baseColorRelease, baseColorPress, margin, ballMoveObservable);
-    ballPainter =
-        new BallPainter(ballColorRelease, ballColorPress, this, margin, ballFinishObservable,
-            ballMoveObservable, getContext());
+    ballPainter = new BallPainter(ballColorRelease, ballColorPress, margin, ballFinishObservable,
+        ballMoveObservable, getContext());
+
     ballShadowPainter =
-        new BallShadowPainter(ballShadowColor, ballShadowColor, this, margin, ballShadowColor,
+        new BallShadowPainter(ballShadowColor, ballShadowColor, margin, ballShadowColor,
             ballFinishObservable, ballMoveObservable, getContext());
     iconPressPainter =
         new IconPressPainter(getContext(), pressIcon, ballFinishObservable, ballMoveObservable,
@@ -134,12 +134,12 @@ public class SwitchPinned extends View {
     invalidate();
   }
 
-  private void setState(SwitchInboxPinedState switchInboxPinedState) {
-    basePainter.setState(switchInboxPinedState);
-    ballPainter.setState(switchInboxPinedState);
-    ballShadowPainter.setState(switchInboxPinedState);
-    iconPressPainter.setState(switchInboxPinedState);
-    iconReleasePainter.setState(switchInboxPinedState);
+  private void setState(MaterialAnimatedSwitchState materialAnimatedSwitchState) {
+    basePainter.setState(materialAnimatedSwitchState);
+    ballPainter.setState(materialAnimatedSwitchState);
+    ballShadowPainter.setState(materialAnimatedSwitchState);
+    iconPressPainter.setState(materialAnimatedSwitchState);
+    iconReleasePainter.setState(materialAnimatedSwitchState);
   }
 
   @Override public boolean onTouchEvent(MotionEvent event) {
@@ -158,25 +158,29 @@ public class SwitchPinned extends View {
   }
 
   private void doActionDown() {
-    if (actualState.equals(SwitchInboxPinedState.RELEASE) || actualState.equals(
-        SwitchInboxPinedState.INIT)) {
-      actualState = SwitchInboxPinedState.PRESS;
+    if (actualState.equals(MaterialAnimatedSwitchState.RELEASE) || actualState.equals(
+        MaterialAnimatedSwitchState.INIT)) {
+      actualState = MaterialAnimatedSwitchState.PRESS;
       setState(actualState);
     } else {
-      actualState = SwitchInboxPinedState.RELEASE;
+      actualState = MaterialAnimatedSwitchState.RELEASE;
       setState(actualState);
     }
     playSoundEffect(SoundEffectConstants.CLICK);
   }
 
   public void check() {
-    actualState = SwitchInboxPinedState.PRESS;
+    actualState = MaterialAnimatedSwitchState.PRESS;
     setState(actualState);
   }
 
   public void unCheck() {
-    actualState = SwitchInboxPinedState.RELEASE;
+    actualState = MaterialAnimatedSwitchState.RELEASE;
     setState(actualState);
+  }
+
+  public void toggle() {
+    doActionDown();
   }
 
   /**

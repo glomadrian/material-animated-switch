@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -10,41 +11,77 @@
     tools:context=".MainActivity"
     android:background="#4285F4"
     >
-
-  <com.github.glomadrian.materialanimatedswitch.SwitchPinned
-      android:id="@+id/pin"
+  <com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch
+      android:id="@+id/masterSwitch"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      >
-  </com.github.glomadrian.materialanimatedswitch.SwitchPinned>
-
-  <com.github.glomadrian.materialanimatedswitch.SwitchPinned
-      android:layout_below="@+id/pin"
-      android:layout_marginTop="20dp"
-      android:id="@+id/pin2"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      app:base_release_color="@color/md_green_900"
-      app:base_press_color="@color/md_green_50"
-      app:ball_release_color="@color/md_green_500"
+      android:layout_margin="20dp"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentRight="true"
+      app:base_release_color="@color/md_teal_900"
+      app:base_press_color="@color/md_teal_50"
+      app:ball_release_color="@color/md_teal_500"
       app:ball_press_color="@color/md_white_1000"
-      app:icon_release="@drawable/shield_with_sword_64"
-      app:icon_press="@drawable/sword_in_vertical_position_64"
-
+      app:icon_release="@drawable/ic_radio_button_off_white_36dp"
+      app:icon_press="@drawable/ic_radio_button_on_teal_500_36dp"
       />
 
-  <com.github.glomadrian.materialanimatedswitch.SwitchPinned
-      android:id="@+id/pin3"
-      android:layout_below="@+id/pin2"
+  <LinearLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:weightSum="4"
+      android:orientation="vertical"
       android:layout_centerInParent="true"
-      android:layout_marginTop="20dp"
-      app:icon_release="@drawable/ic_create_white_36dp"
-      app:icon_press="@drawable/ic_delete_blue_500_36dp"
       >
-  </com.github.glomadrian.materialanimatedswitch.SwitchPinned>
+
+    <com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch
+        android:id="@+id/pin"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch
+        android:layout_marginTop="20dp"
+        android:id="@+id/pin2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:base_release_color="@color/md_green_900"
+        app:base_press_color="@color/md_green_50"
+        app:ball_release_color="@color/md_green_500"
+        app:ball_press_color="@color/md_white_1000"
+        app:icon_release="@drawable/shield_with_sword_64"
+        app:icon_press="@drawable/sword_in_vertical_position_64"
+        />
+
+    <com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch
+        android:id="@+id/pin3"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        app:base_release_color="@color/md_deep_purple_900"
+        app:base_press_color="@color/md_deep_purple_50"
+        app:ball_release_color="@color/md_deep_purple_500"
+        app:ball_press_color="@color/md_white_1000"
+        app:icon_release="@drawable/ic_create_white_36dp"
+        app:icon_press="@drawable/ic_delete_deep_purple_500_36dp"
+        />
+
+    <com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch
+        android:id="@+id/pin4"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        app:base_release_color="@color/md_deep_orange_900"
+        app:base_press_color="@color/md_deep_orange_50"
+        app:ball_release_color="@color/md_deep_orange_500"
+        app:ball_press_color="@color/md_white_1000"
+        app:icon_release="@drawable/ic_play_arrow_white_36dp"
+        app:icon_press="@drawable/ic_stop_deep_orange_500_36dp"
+        />
+  </LinearLayout>
 
 </RelativeLayout>

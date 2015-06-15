@@ -5,7 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import com.github.glomadrian.materialanimatedswitch.R;
-import com.github.glomadrian.materialanimatedswitch.SwitchInboxPinedState;
+import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitchState;
 import com.github.glomadrian.materialanimatedswitch.observer.BallFinishObservable;
 import java.util.Observable;
 import java.util.Observer;
@@ -24,7 +24,7 @@ public class IconReleasePainter extends IconPainter {
   private int exitYAnimatorFinish;
   private int exitXAnimationStart;
   private BallFinishObservable ballFinishObservable;
-  private SwitchInboxPinedState actualState;
+  private MaterialAnimatedSwitchState actualState;
   private int iconMargin;
   private int middle;
   private boolean alphaEnterTrigger = false;
@@ -78,7 +78,7 @@ public class IconReleasePainter extends IconPainter {
     return 0;
   }
 
-  @Override public void setState(SwitchInboxPinedState state) {
+  @Override public void setState(MaterialAnimatedSwitchState state) {
     this.actualState = state;
     switch (state) {
       case INIT:
@@ -156,7 +156,7 @@ public class IconReleasePainter extends IconPainter {
 
       if (animation.getCurrentPlayTime() > animation.getDuration() / 2
           && !alphaEnterTrigger
-          && actualState.equals(SwitchInboxPinedState.RELEASE)) {
+          && actualState.equals(MaterialAnimatedSwitchState.RELEASE)) {
         exitAlphaAnimator.start();
         alphaEnterTrigger = true;
       }
