@@ -1,5 +1,6 @@
 Material Animated Switch
 -----------------
+[ ![Download](https://api.bintray.com/packages/glomadrian/maven/MaterialAnimatedSwitch/images/download.svg) ](https://bintray.com/glomadrian/maven/MaterialAnimatedSwitch/_latestVersion)
 
 A material Switch with icon animations and color transitions
 
@@ -16,10 +17,16 @@ A material Switch with icon animations and color transitions
 
 ### Sample app:
 
-<a href="https://play.google.com/store/apps/details?id=com.github.glomadrian.velocimeter">
+<a href="https://play.google.com/store/apps/details?id=com.github.glomadrian.materialanimatedswitch.sample">
   <img alt="Get it on Google Play"
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
+
+Fully inspired in
+----------
+
+
+[Inbox Pinned](https://dribbble.com/shots/2098916-Inbox-Pinned) by [Derek Torsani](https://dribbble.com/dmtors)
 
 
 How to use
@@ -74,7 +81,7 @@ repositories {
 ```
 Add dependency
 ```groovy
-compile 'com.github.glomadrian:velocimeterlibrary:1.1@aar'
+compile 'com.github.glomadrian:MaterialAnimatedSwitch:1.0@aar'
 ```
 Developed By
 ------------
