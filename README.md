@@ -1,6 +1,7 @@
-Material Animated Switch
+Material Animated Switch  
 -----------------
-[ ![Download](https://api.bintray.com/packages/glomadrian/maven/MaterialAnimatedSwitch/images/download.svg) ](https://bintray.com/glomadrian/maven/MaterialAnimatedSwitch/_latestVersion)
+[![Download](https://api.bintray.com/packages/glomadrian/maven/MaterialAnimatedSwitch/images/download.svg) ](https://bintray.com/glomadrian/maven/MaterialAnimatedSwitch/_latestVersion)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Material%20Animated%20Switch-green.svg?style=flat)](https://android-arsenal.com/details/1/1985)
 
 A material Switch with icon animations and color transitions
 
