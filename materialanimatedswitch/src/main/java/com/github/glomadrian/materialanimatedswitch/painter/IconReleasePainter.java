@@ -4,8 +4,8 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
-import com.github.glomadrian.materialanimatedswitch.R;
 import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitchState;
+import com.github.glomadrian.materialanimatedswitch.R;
 import com.github.glomadrian.materialanimatedswitch.observer.BallFinishObservable;
 import java.util.Observable;
 import java.util.Observer;
@@ -122,7 +122,7 @@ public class IconReleasePainter extends IconPainter {
     enterXAnimator.setIntValues(0, width);
     enterYAnimator.setIntValues(enterYAnimationStart, middle);
     exitYAnimator.setIntValues(middle, exitYAnimatorFinish);
-    exitXAnimator.setIntValues(exitXAnimationStart, margin - imageWidth);
+    exitXAnimator.setIntValues(exitXAnimationStart, 0);
   }
 
   private void initValues() {

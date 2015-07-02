@@ -3,6 +3,7 @@ package com.github.glomadrian.materialanimatedswitch.sample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,5 +24,14 @@ public class MainActivity extends AppCompatActivity {
     materialAnimatedSwitch3 = (MaterialAnimatedSwitch) findViewById(R.id.pin3);
     materialAnimatedSwitch4 = (MaterialAnimatedSwitch) findViewById(R.id.pin4);
     masterSwitch = (MaterialAnimatedSwitch) findViewById(R.id.masterSwitch);
+
+    materialAnimatedSwitch.setOnCheckedChangeListener(
+        new MaterialAnimatedSwitch.OnCheckedChangeListener() {
+          @Override public void onCheckedChanged(boolean isChecked) {
+            Toast.makeText(MainActivity.this, materialAnimatedSwitch.isChecked() + "",
+                Toast.LENGTH_SHORT).show();
+            materialAnimatedSwitch2.toggle();
+          }
+        });
   }
 }

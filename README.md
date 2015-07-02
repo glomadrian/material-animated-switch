@@ -81,8 +81,17 @@ repositories {
 ```
 Add dependency
 ```groovy
-compile 'com.github.glomadrian:MaterialAnimatedSwitch:1.0@aar'
+compile 'com.github.glomadrian:MaterialAnimatedSwitch:1.1@aar'
 ```
+Changelog
+---------------------
+
+V 1.1
+
+* Fixed bug that cut the ball at the start
+* Added isChecked() method
+* fix toggle() method
+
 Developed By
 ------------
 Adrián García Lomas - <glomadrian@gmail.com>

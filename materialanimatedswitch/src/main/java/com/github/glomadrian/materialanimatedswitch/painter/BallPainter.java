@@ -5,8 +5,8 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import com.github.glomadrian.materialanimatedswitch.R;
 import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitchState;
+import com.github.glomadrian.materialanimatedswitch.R;
 import com.github.glomadrian.materialanimatedswitch.observer.BallFinishObservable;
 import com.github.glomadrian.materialanimatedswitch.observer.BallMoveObservable;
 
@@ -22,6 +22,7 @@ public class BallPainter implements SwitchInboxPinnedPainter {
   protected int width;
   protected int radius;
   protected int ballPositionX;
+  protected int ballStartPositionX;
   protected int ballMovementRange;
   private ValueAnimator moveAnimator;
   private ValueAnimator colorAnimator;
@@ -56,8 +57,8 @@ public class BallPainter implements SwitchInboxPinnedPainter {
     toBgPainter.setAntiAlias(true);
     toBgPainter.setAlpha(0);
     radius = (int) context.getResources().getDimension(R.dimen.ball_radius);
-    ballPositionX = radius;
-
+    ballStartPositionX = (int) context.getResources().getDimension(R.dimen.ball_start_position);
+    ballPositionX = padding;
   }
 
   private void initAnimator() {
@@ -158,4 +159,5 @@ public class BallPainter implements SwitchInboxPinnedPainter {
       return ((value * 100) / ballMovementRange);
     }
   }
+
 }

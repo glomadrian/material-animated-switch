@@ -159,7 +159,7 @@ public class MaterialAnimatedSwitch extends View {
 
   private void doActionDown() {
     if (actualState.equals(MaterialAnimatedSwitchState.RELEASE) || actualState.equals(
-        MaterialAnimatedSwitchState.INIT)) {
+        MaterialAnimatedSwitchState.INIT) || actualState == null) {
       actualState = MaterialAnimatedSwitchState.PRESS;
       setState(actualState);
     } else {
@@ -169,18 +169,14 @@ public class MaterialAnimatedSwitch extends View {
     playSoundEffect(SoundEffectConstants.CLICK);
   }
 
-  public void check() {
-    actualState = MaterialAnimatedSwitchState.PRESS;
-    setState(actualState);
-  }
-
-  public void unCheck() {
-    actualState = MaterialAnimatedSwitchState.RELEASE;
-    setState(actualState);
+  public boolean isChecked() {
+    return actualState.equals(MaterialAnimatedSwitchState.PRESS);
   }
 
   public void toggle() {
-    doActionDown();
+    if (isClickable) {
+      doActionDown();
+    }
   }
 
   /**
