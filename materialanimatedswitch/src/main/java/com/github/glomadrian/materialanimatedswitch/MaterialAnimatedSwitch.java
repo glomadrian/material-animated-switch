@@ -43,6 +43,8 @@ public class MaterialAnimatedSwitch extends View {
   private BallFinishObservable ballFinishObservable;
   private BallMoveObservable ballMoveObservable;
   private boolean isClickable = true;
+  private boolean isRefreshable = true;
+  private CancelTask cancelTask = new CancelTask();
   private OnCheckedChangeListener onCheckedChangeListener;
 
   public MaterialAnimatedSwitch(Context context) {
@@ -134,7 +136,9 @@ public class MaterialAnimatedSwitch extends View {
     ballPainter.draw(canvas);
     iconPressPainter.draw(canvas);
     iconReleasePainter.draw(canvas);
-    invalidate();
+    if(isRefreshable) {
+      invalidate();
+    }
   }
 
   private void setState(MaterialAnimatedSwitchState materialAnimatedSwitchState) {
@@ -161,6 +165,9 @@ public class MaterialAnimatedSwitch extends View {
   }
 
   private void doActionDown() {
+    isRefreshable = true;
+    removeCallbacks(cancelTask);
+    postDelayed(cancelTask, 1000);
     if (actualState.equals(MaterialAnimatedSwitchState.RELEASE) || actualState.equals(
         MaterialAnimatedSwitchState.INIT) || actualState == null) {
       actualState = MaterialAnimatedSwitchState.PRESS;
@@ -170,6 +177,7 @@ public class MaterialAnimatedSwitch extends View {
       setState(actualState);
     }
     playSoundEffect(SoundEffectConstants.CLICK);
+    invalidate();
   }
 
   public boolean isChecked() {
@@ -211,5 +219,13 @@ public class MaterialAnimatedSwitch extends View {
   public interface OnCheckedChangeListener {
 
     void onCheckedChanged(boolean isChecked);
+  }
+
+  private class CancelTask implements Runnable{
+
+    @Override
+    public void run() {
+      isRefreshable = false;
+    }
   }
 }
