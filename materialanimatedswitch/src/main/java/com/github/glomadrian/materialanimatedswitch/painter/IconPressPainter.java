@@ -1,12 +1,13 @@
 package com.github.glomadrian.materialanimatedswitch.painter;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import com.github.glomadrian.materialanimatedswitch.R;
 import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitchState;
 import com.github.glomadrian.materialanimatedswitch.observer.BallFinishObservable;
 import com.github.glomadrian.materialanimatedswitch.observer.BallMoveObservable;
+import com.nineoldandroids.animation.ValueAnimator;
+
 import java.util.Observable;
 import java.util.Observer;
 
