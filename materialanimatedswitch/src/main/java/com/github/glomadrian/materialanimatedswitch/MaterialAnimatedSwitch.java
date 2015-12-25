@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -65,7 +66,9 @@ public class MaterialAnimatedSwitch extends View {
     initPainters();
     actualState = MaterialAnimatedSwitchState.INIT;
     setState(actualState);
-    setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+      setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+    }
   }
 
   private void initPainters() {
